@@ -8,15 +8,26 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script src="http://cdn.peerjs.com/0.3/peer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <script src="main.js"></script>
 </head>
 <body>
-    <h3 id="my-peer">My peerID: </h3>
-    <video id="localStream" width="300" controls></video>
-    <br><br>
-    <video id="remoteStream" width="300" controls></video>
-    <br><br>
-    <input type="text" id="remote-id">
-    <button type="button" id="btnCall">Call</button>
+    <div id="div-chat" style="display: none;">
+        <p>user online</p>
+        <ul id="user-online"></ul>
+        <br><br>
+    
+        <h3 id="my-peer">My peerID: </h3>
+        <video id="localStream" width="300" controls></video>
+        <br><br>
+    
+        <video id="remoteStream" width="300" controls></video>
+        <br><br>
+    </div>
+    
+    <div id="div-register">
+        <input type="text" id="username" placeholder="enter username">
+        <button type="button" id="btnRegister">Register</button>
+    </div>
 </body>
 </html>

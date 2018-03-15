@@ -1,3 +1,5 @@
+const socket = io('http://localhost:3000');
+
 function openStream () {
     let config = { audio: false, video:true };
     return navigator.mediaDevices.getUserMedia(config); //1 promise
@@ -13,6 +15,31 @@ function playStream (idVideoTag, stream) {
 let peer = new Peer({ key: '2jqx54113lfh6w29' });
 peer.on('open', id => {
     $('#my-peer').append(id);
+
+    $('#btnRegister').bind('click', function () {
+        let username = $('#username').val();
+        socket.emit('user-register', { username: username, peerId: id });
+    });
+});
+
+// user online
+socket.on('list-user-online', function (userArr) {
+    $('#div-register').hide();
+    $('#div-chat').show();
+
+    userArr.forEach(user => {
+        let { username, peerId } = user;
+        $('#user-online').append(`<li id="${ peerId }">${ username }</li>`);
+    });
+
+    socket.on('new-user', function (user) {
+        let { username, peerId } = user;
+        $('#user-online').append(`<li id="${ peerId }">${ username }</li>`);
+    });
+
+    socket.on('user-disconnect', function (peerId) {
+        $(`#${ peerId }`).remove();
+    });
 });
 
 //answer
@@ -34,8 +61,8 @@ peer.on('call', function (call) {
 
 $(document).ready(function () {
     //call
-    $('#btnCall').bind('click', function () {
-        let id = $('#remote-id').val();
+    $('#user-online').bind('click', 'li', function () {
+        let id = $(this).attr('id');
         openStream()
         .then(localStream => {
             //play in local
@@ -48,5 +75,4 @@ $(document).ready(function () {
             });
         });
     });
-
 });
