@@ -17,7 +17,7 @@ peer.on('open', id => {
 
 //call
 $('#btnCall').bind('click', function () {
-    let id = $('#remoteId').val();
+    let id = $('#remote-id').val();
 
     openStream()
     .then(localStream => {
@@ -38,7 +38,7 @@ peer.on('call', function (call) {
     .then(localStream => {
         //answer stream
         call.answer(localStream);
-        
+
         //play in local
         playStream('localStream', localStream);
 
