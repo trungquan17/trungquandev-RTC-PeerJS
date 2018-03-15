@@ -1,5 +1,5 @@
 const socket = io('http://localhost:3000');
-const peer = new Peer({ key: 'peerjs', host: 'https://rtc-trungquandev.herokuapp.com/', secure: true, port: 443, });
+const peer = new Peer({ key: 'peerjs', host: 'rtc-trungquandev.herokuapp.com', secure: true, port: 443 });
 
 function openStream () {
     let config = { audio: true, video:true };
