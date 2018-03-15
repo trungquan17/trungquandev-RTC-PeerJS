@@ -1,4 +1,5 @@
 const socket = io('http://localhost:3000');
+const peer = new Peer({ key: '2jqx54113lfh6w29' });
 
 function openStream () {
     let config = { audio: false, video:true };
@@ -12,7 +13,6 @@ function playStream (idVideoTag, stream) {
 }
 
 //connect
-let peer = new Peer({ key: '2jqx54113lfh6w29' });
 peer.on('open', id => {
     $('#my-peer').append(id);
 
@@ -61,7 +61,7 @@ peer.on('call', function (call) {
 
 $(document).ready(function () {
     //call
-    $('#user-online').bind('click', 'li', function () {
+    $('#user-online').on('click', 'li', function () {
         let id = $(this).attr('id');
         openStream()
         .then(localStream => {
