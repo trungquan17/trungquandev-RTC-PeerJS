@@ -15,23 +15,6 @@ peer.on('open', id => {
     $('#my-peer').append(id);
 });
 
-//call
-$('#btnCall').bind('click', function () {
-    let id = $('#remote-id').val();
-
-    openStream()
-    .then(localStream => {
-        //play in local
-        playStream('localStream', localStream);
-
-        //start call and show video in remoteStream when user accept call
-        let call = peer.call(id, localStream);
-        call.on('stream', function (remoteStream) {
-            playStream('remoteStream', remoteStream);
-        });
-    });
-});
-
 //answer
 peer.on('call', function (call) {
     openStream()
@@ -47,4 +30,23 @@ peer.on('call', function (call) {
             playStream('remoteStream', remoteStream);
         });
     });
+});
+
+$(document).ready(function () {
+    //call
+    $('#btnCall').bind('click', function () {
+        let id = $('#remote-id').val();
+        openStream()
+        .then(localStream => {
+            //play in local
+            playStream('localStream', localStream);
+
+            //start call and show video in remoteStream when user accept call
+            let call = peer.call(id, localStream);
+            call.on('stream', function (remoteStream) {
+                playStream('remoteStream', remoteStream);
+            });
+        });
+    });
+
 });
